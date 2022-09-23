@@ -4,20 +4,35 @@ import "fmt"
 
 func main() {
 
-	testSlice := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	post := &Post{
+		Title:    "test title",
+		Content:  "test content",
+		Hashtags: []string{"bird", "nature", "animal", "tree", "sun"},
+	}
 
-	res := removeElement(testSlice, 5)
-	fmt.Println(res) // [1 2 3 4 6 7 8 9 10]
+	post.RemoveHashtag("animal")
+
+	post.PrintHashtags() // [bird nature tree sun]
 }
 
-func removeElement(slice []int, s int) []int {
+type Post struct {
+	Title    string
+	Content  string
+	Hashtags []string
+}
+
+func (p *Post) RemoveHashtag(tag string) {
 	idx := 0
-	for _, v := range slice {
-		if v != s {
-			slice[idx] = v
+	for _, v := range p.Hashtags {
+		if v != tag {
+			p.Hashtags[idx] = v
 			idx++
 		}
-
 	}
-	return slice[:idx]
+
+	p.Hashtags = p.Hashtags[:idx]
+}
+
+func (p *Post) PrintHashtags() {
+	fmt.Println(p.Hashtags)
 }
